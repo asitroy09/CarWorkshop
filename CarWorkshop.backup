@@ -1,0 +1,248 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.3.5
+-- Dumped by pg_dump version 9.3.5
+-- Started on 2016-04-11 09:33:00
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 175 (class 3079 OID 11750)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 1969 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 174 (class 1259 OID 16434)
+-- Name: employee; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE employee (
+    id bigint NOT NULL,
+    emp_name character varying(100),
+    emp_desg character varying(50)
+);
+
+
+ALTER TABLE public.employee OWNER TO postgres;
+
+--
+-- TOC entry 170 (class 1259 OID 16394)
+-- Name: job; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE job (
+    id bigint NOT NULL,
+    veh_reg_no character varying(100),
+    job_date date,
+    emp_id bigint
+);
+
+
+ALTER TABLE public.job OWNER TO postgres;
+
+--
+-- TOC entry 172 (class 1259 OID 16400)
+-- Name: jobline; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE jobline (
+    id bigint NOT NULL,
+    job_id bigint,
+    task_id bigint
+);
+
+
+ALTER TABLE public.jobline OWNER TO postgres;
+
+--
+-- TOC entry 173 (class 1259 OID 16403)
+-- Name: task; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE task (
+    id bigint NOT NULL,
+    task_name character varying(100)
+);
+
+
+ALTER TABLE public.task OWNER TO postgres;
+
+--
+-- TOC entry 171 (class 1259 OID 16397)
+-- Name: vehicle; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE vehicle (
+    reg_no character varying(100) NOT NULL,
+    veh_make character varying(20),
+    km_driven bigint
+);
+
+
+ALTER TABLE public.vehicle OWNER TO postgres;
+
+--
+-- TOC entry 1961 (class 0 OID 16434)
+-- Dependencies: 174
+-- Data for Name: employee; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY employee (id, emp_name, emp_desg) FROM stdin;
+\.
+
+
+--
+-- TOC entry 1957 (class 0 OID 16394)
+-- Dependencies: 170
+-- Data for Name: job; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY job (id, veh_reg_no, job_date, emp_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 1959 (class 0 OID 16400)
+-- Dependencies: 172
+-- Data for Name: jobline; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY jobline (id, job_id, task_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 1960 (class 0 OID 16403)
+-- Dependencies: 173
+-- Data for Name: task; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY task (id, task_name) FROM stdin;
+\.
+
+
+--
+-- TOC entry 1958 (class 0 OID 16397)
+-- Dependencies: 171
+-- Data for Name: vehicle; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY vehicle (reg_no, veh_make, km_driven) FROM stdin;
+\.
+
+
+--
+-- TOC entry 1846 (class 2606 OID 16438)
+-- Name: employee_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY employee
+    ADD CONSTRAINT employee_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1838 (class 2606 OID 16412)
+-- Name: job_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY job
+    ADD CONSTRAINT job_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1842 (class 2606 OID 16414)
+-- Name: jobline_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY jobline
+    ADD CONSTRAINT jobline_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1844 (class 2606 OID 16421)
+-- Name: task_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY task
+    ADD CONSTRAINT task_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1840 (class 2606 OID 16433)
+-- Name: vehicle_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY vehicle
+    ADD CONSTRAINT vehicle_pkey PRIMARY KEY (reg_no);
+
+
+--
+-- TOC entry 1847 (class 2606 OID 16439)
+-- Name: job_emp_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY job
+    ADD CONSTRAINT job_emp_id_fkey FOREIGN KEY (emp_id) REFERENCES employee(id);
+
+
+--
+-- TOC entry 1848 (class 2606 OID 16415)
+-- Name: jobline_job_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY jobline
+    ADD CONSTRAINT jobline_job_id_fkey FOREIGN KEY (job_id) REFERENCES job(id);
+
+
+--
+-- TOC entry 1849 (class 2606 OID 16422)
+-- Name: jobline_task_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY jobline
+    ADD CONSTRAINT jobline_task_id_fkey FOREIGN KEY (task_id) REFERENCES task(id);
+
+
+--
+-- TOC entry 1968 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2016-04-11 09:33:00
+
+--
+-- PostgreSQL database dump complete
+--
+

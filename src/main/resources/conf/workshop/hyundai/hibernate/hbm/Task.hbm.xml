@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 8, 2016 8:44:29 AM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.hyundai.web.entity.Task" table="task">
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="taskName" type="string">
+            <column name="task_name" length="100" />
+        </property>
+        <set name="joblines" table="jobline" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="task_id" />
+            </key>
+            <one-to-many class="com.hyundai.web.entity.Jobline" />
+        </set>
+    </class>
+</hibernate-mapping>

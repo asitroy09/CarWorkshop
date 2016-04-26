@@ -5,12 +5,16 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import com.hyundai.web.dao.CrudDao;
 import com.hyundai.web.entity.Job;
-
+@Service
 public class JobServiceImpl implements JobService{
-@Autowired CrudDao<Job> crudDao ;
+@Autowired 
+@Qualifier("crudDaoImpl")
+CrudDao<Job> crudDao ;
 
 
 public void saveJob(Job job) {

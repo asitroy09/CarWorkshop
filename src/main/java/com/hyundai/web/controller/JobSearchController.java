@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,9 @@ import com.hyundai.web.service.JobService;
 public class JobSearchController {
 
 	
-	@Autowired JobService jobService;
+	@Autowired
+	 @Qualifier("jobServiceImpl")
+	JobService jobService;
 	List<Job> jobs;
 
 	// @ResponseBody, not necessary, since class is annotated with @RestController

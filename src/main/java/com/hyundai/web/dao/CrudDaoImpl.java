@@ -9,31 +9,10 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-
-
-
 
 public abstract class CrudDaoImpl<T>  {
 
-
 	private Class<T> type;
-	public CrudDaoImpl() {
-        // TODO Auto-generated constructor stub
- 
-    }
- 
-   /* public CrudDaoImpl(Class<T> type) {
-        // TODO Auto-generated constructor stub
- 
-        this.type = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-    }
-*/
-	
 	private Class<T> getType() {
 		if (type == null) {
 			Type t = getClass().getGenericSuperclass();
@@ -42,9 +21,6 @@ public abstract class CrudDaoImpl<T>  {
 		}
 		return type;
 	} 
-
-
-
 
 	public void delete(T objeto) {
 		getSession().delete(objeto);
@@ -55,21 +31,13 @@ public abstract class CrudDaoImpl<T>  {
 		getSession().saveOrUpdate(objeto);
 	}
 
-
 	public List<T> findAll() {
-		return getSession().createCriteria(type).list();
+		return getSession().createCriteria(getType()).list();
 	}
 
 
 	public T findById(Long id) {
-		return (T) getSession().get(type, id);
-	}
-
-
-	public  List<T> getAll(final Class<T> type) {
-		final Session session = getSession();
-		final Criteria crit = session.createCriteria(type);
-		return crit.list();
+		return (T) getSession().get(getType(), id);
 	}
 
 	@Autowired

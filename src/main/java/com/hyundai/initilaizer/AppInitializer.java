@@ -7,7 +7,7 @@ import com.hyundai.config.AppWebConfig;
 
 
 public class AppInitializer extends
-		AbstractAnnotationConfigDispatcherServletInitializer {
+AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {

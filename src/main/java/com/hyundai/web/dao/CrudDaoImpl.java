@@ -27,12 +27,12 @@ public abstract class CrudDaoImpl<T>  {
  
     }
  
-    public CrudDaoImpl(Class<T> type) {
+   /* public CrudDaoImpl(Class<T> type) {
         // TODO Auto-generated constructor stub
  
-        this.type = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+        this.type = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
-
+*/
 	
 	private Class<T> getType() {
 		if (type == null) {
@@ -80,6 +80,6 @@ public abstract class CrudDaoImpl<T>  {
 	}
 	
 	protected Criteria createEntityCriteria(){
-        return getSession().createCriteria(type);
+        return getSession().createCriteria(getType());
     }
 }

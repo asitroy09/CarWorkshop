@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.JstlView;
  
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackages ={"com.hyundai.web" })
+@ComponentScan(basePackages ={"com.hyundai.web","com.hyundai.config" })
 public class AppWebConfig extends WebMvcConfigurerAdapter {
  
 	@Override
@@ -27,5 +27,5 @@ public class AppWebConfig extends WebMvcConfigurerAdapter {
 		viewResolver.setSuffix(".jsp");
 		return viewResolver;
 	}
- 
+	
 }

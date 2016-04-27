@@ -1,5 +1,6 @@
 package com.hyundai.config;
 
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -28,11 +29,12 @@ public class HibernateXmlConfig {
     private Environment environment;
  
     @Bean
-    public LocalSessionFactoryBean sessionFactory() {
+    public LocalSessionFactoryBean sessionFactory() throws IOException {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setConfigLocation(new ClassPathResource("classpath:conf/workspace/hyundai/hibernate/hibernate.cfg.xml" ));
+        sessionFactory.setConfigLocation(new ClassPathResource("conf/workshop/hyundai/hibernate/hibernate.cfg.xml" ));
         sessionFactory.setHibernateProperties(hibernateProperties());
+        sessionFactory.afterPropertiesSet();
         return sessionFactory;
      }
      

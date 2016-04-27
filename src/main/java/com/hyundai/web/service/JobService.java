@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.hyundai.web.entity.Job;
-@Service
+
 public interface JobService {
 
 	void saveJob(Job job);

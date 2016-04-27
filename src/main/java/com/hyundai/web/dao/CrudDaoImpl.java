@@ -9,17 +9,31 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 
-@Repository
-public class CrudDaoImpl<T> implements CrudDao<T> {
+
+
+
+public abstract class CrudDaoImpl<T>  {
 
 
 	private Class<T> type;
+	public CrudDaoImpl() {
+        // TODO Auto-generated constructor stub
+ 
+    }
+ 
+    public CrudDaoImpl(Class<T> type) {
+        // TODO Auto-generated constructor stub
+ 
+        this.type = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+    }
 
-
-
+	
 	private Class<T> getType() {
 		if (type == null) {
 			Type t = getClass().getGenericSuperclass();
@@ -27,7 +41,7 @@ public class CrudDaoImpl<T> implements CrudDao<T> {
 			type = (Class) pt.getActualTypeArguments()[0];
 		}
 		return type;
-	}
+	} 
 
 
 
@@ -43,7 +57,7 @@ public class CrudDaoImpl<T> implements CrudDao<T> {
 
 
 	public List<T> findAll() {
-		return getSession().createCriteria(getType()).list();
+		return getSession().createCriteria(type).list();
 	}
 
 
@@ -64,4 +78,8 @@ public class CrudDaoImpl<T> implements CrudDao<T> {
 	protected Session getSession(){
 		return sessionFactory.getCurrentSession();
 	}
+	
+	protected Criteria createEntityCriteria(){
+        return getSession().createCriteria(type);
+    }
 }
